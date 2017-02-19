@@ -1,0 +1,25 @@
+<div class="modal-header">
+  <h3 class="modal-title">picture</h3>
+</div>
+
+<div class="modal-body">
+  Share Point:{{SelectCtrl.sp}}
+  <br/>
+  <div>
+    <img class="photo-img" ng-src="{{selectCtrl.rawdataUrl}}" style="max-width: 400px;">
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button class="btn btn-primary" type="button" ng-click="selectCtrl.buy()">Buy</button>
+  <button class="btn btn-warning" type="button" ng-click="selectCtrl.cancel()">Cancel</button>
+</div>
+
+<div class="modal-footer">
+  <div class="input-group animated fadeIn">
+  <input type="text" class="form-control finderBar" ng-model="searchTerm" ng-model="selectCtrl.comment" placeholder="Comment...">
+  <span class="input-group-btn">
+    <button class="btn btn-default" type="button" ng-click="selectCtrl.bad()">Bad!</button>
+  </span>
+  </div>
+</div>

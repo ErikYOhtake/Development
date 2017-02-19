@@ -1,0 +1,34 @@
+<div class="container">
+  <h1 class="page-header">mypage</h1>
+  <div class="well">
+    <div ngf-drop ngf-select ng-model="mypageCtrl.file" class="drop-box"
+         ngf-multiple="false" ngf-allow-dir="false" ngf-accept="'image/*'">Please drag and drop the image you want to register</div>
+    <div ngf-no-file-drop>Drag-and-drop is not supported in this browser</div>
+    <img ng-show="mypageCtrl.file" ngf-src="mypageCtrl.file" ngf-accept="'image/*'" class="preview-box">
+    <div>
+      <button type="button" class="btn btn-default" ng-click="mypageCtrl.upload(mypageCtrl.file)" ng-disabled="!mypageCtrl.file">upload</button>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <h4>my products</h4>
+  <div class="row">
+    <div class="col-xs-6 col-md-4" ng-repeat="product in mypageCtrl.products">
+      <div id="tile-image" width="100%" height="100%">
+        <img class="thumbnail" ng-src="{{product.rurl}}" style="max-width: 300px; max-height: 200px;">
+      </div>
+    </div>
+  </div>
+  <h4>purchase hist</h4>
+  <!--
+  <div ng-repeat="purchasehist in mypageCtrl.purchasehists">
+  <div class="row">
+    <div class="col-xs-6 col-md-4" ng-repeat="url in purchasehist.phist track by $index">
+      <div id="tile-image" width="100%" height="100%">
+        <img class="thumbnail" ng-src="{{url}}" style="max-width: 300px; max-height: 200px;">
+      </div>
+    </div>
+  </div>
+  </div>
+-->
+</div>
