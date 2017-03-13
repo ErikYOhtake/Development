@@ -11,6 +11,7 @@ var ProductSchema = new mongoose.Schema({
   seid: mongoose.Schema.Types.ObjectId, // seller_id
   sbad: String, // seller_blockchain_address
   ctgy: Array, // category
+  tags: Array, // tags
   dipr: {type:Boolean, default: false}, // discontinued_propriety
   sapr: {type:Number, default: 50}, // sale_price
   sanu: {type:Number, default: 0}, // sale_number
