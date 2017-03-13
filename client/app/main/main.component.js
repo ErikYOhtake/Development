@@ -4,11 +4,13 @@ import routing from './main.routes';
 
 export class MainController {
   /*@ngInject*/
-  constructor($http, $scope, socket, $uibModal, Auth) {
+  constructor($http, $scope, socket, $uibModal, appConfig, Auth) {
     this.$http = $http;
     this.socket = socket;
     this.$uibModal = $uibModal;
-
+    this.numberOfDisplay = appConfig.numberOfDisplay;
+    this.busy = true;
+    this.noMoreData = false;
     this.userId = null;
     Auth.getCurrentUser()
     .then(data => {
@@ -21,6 +23,27 @@ export class MainController {
     this.$http.get('/api/products')
       .then(response => {
         this.products = response.data;
+        if (this.products.length < this.numberOfDisplay) {
+          this.noMoreData = true;
+        }
+        this.busy = false;
+      });
+  }
+
+  showMore() {
+    if(this.busy) {
+      return;
+    }
+    this.busy = true;
+    var lastId = this.products[this.products.length-1]._id;
+
+    this.$http.get('/api/products/index/' + lastId)
+      .then(response => {
+        Array.prototype.push.apply(this.products, response.data);
+        if (response.data.length === 0) {
+          this.noMoreData = true;
+        }
+        this.busy = false;
       });
   }
 
