@@ -10,10 +10,7 @@ var multipartyMiddleware = multiparty();
 var router = express.Router();
 
 router.get('/', controller.index);
-router.get('/index/:id', controller.showMore);
-router.get('/owner/', auth.isAuthenticated(), controller.findByOwner);
-router.get('/product/:id', controller.show);
-router.get('/seller/:id', controller.findBySeller);
+router.get('/:id', controller.show);
 router.post('/', auth.isAuthenticated(), multipartyMiddleware, controller.create);
 router.put('/:id', controller.upsert);
 router.patch('/:id', controller.patch);

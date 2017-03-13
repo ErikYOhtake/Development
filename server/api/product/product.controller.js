@@ -13,7 +13,6 @@
 import jsonpatch from 'fast-json-patch';
 import Product from './product.model';
 import cloudinary from 'cloudinary'; // TODO
-import config from '../../config/environment';
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -67,27 +66,7 @@ function handleError(res, statusCode) {
 
 // Gets a list of Products
 export function index(req, res) {
-  return Product.find().sort({crtm: -1}).limit(config.numberOfDisplay).exec()
-    .then(respondWithResult(res))
-    .catch(handleError(res));
-}
-
-export function showMore(req, res) {
-  return Product.find({_id: {$lt: req.params.id}}).sort({crtm: -1}).limit(config.numberOfDisplay).exec()
-    .then(respondWithResult(res))
-    .catch(handleError(res));
-}
-
-export function findByOwner(req, res) {
-  return Product.find({seid: req.user.id}).exec()
-    .then(handleEntityNotFound(res))
-    .then(respondWithResult(res))
-    .catch(handleError(res));
-}
-
-export function findBySeller(req, res) {
-  return Product.find({seid: req.params.id}).exec()
-    .then(handleEntityNotFound(res))
+  return Product.find().exec()
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
@@ -105,6 +84,11 @@ export function create(req, res) {
   if(req.files.file) {
     // upload to CDN
     var file = req.files.file.path;
+
+    console.log(req.user);
+    console.log(req.user.id);
+    console.log(req.body._id);
+
     cloudinary.uploader.upload(file, function(result) {console.log(result)})
       .then(result => {
         // register a Address
@@ -120,7 +104,6 @@ export function create(req, res) {
         product.seid = req.user.id;
         product.sbad = "dummy";
         product.ctgy = ["親カテゴリ", "子カテゴリ"];
-        product.tags = req.body.tags;
 
         Product.create(product)
           .then(respondWithResult(res, 201))
