@@ -11,7 +11,7 @@ export function setup(User, config) {
     profile._json.id = `${profile._json.id}`;
     profile.id = `${profile.id}`;
 
-    User.findOne({'twitter.id': profile.id}).exec()
+    User.findOne({'twitter.id_str': profile.id}).exec()
       .then(user => {
         if(user) {
           return done(null, user);
