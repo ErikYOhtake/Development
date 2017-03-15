@@ -8,22 +8,23 @@ export default class SelectController {
     this.$scope = $scope;
     this.userId = userId;
     this.productId = productId;
+    this.tags = null;
     this.rawdataUrl = rawdataUrl;
     this.sp = sp;
     this.comment = null;
   }
 
   $onInit() {
-    console.log('userId:' + this.userId);
-    console.log('productId:' + this.productId);
-    console.log('rawdataUrl:' + this.rawdataUrl);
+    this.$http.get('api/products/product/' + this.productId)
+      .then(response => {
+        this.tags = response.data.tags;
+      });
   }
 
   buy() {
     this.$http.post('/api/trades', {
       userId: this.userId,
-      productId: this.productId,
-      method: 'POST'
+      productId: this.productId
       })
       .then(response => {
         console.log('BUY done');
@@ -38,8 +39,7 @@ export default class SelectController {
   bad() {
     this.$http.post('/api/curations', {
       userId: this.userId,
-      productId: this.productId,
-      method: 'POST'
+      productId: this.productId
       })
       .then(response => {
         console.log('BAD done');

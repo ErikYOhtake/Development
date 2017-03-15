@@ -9,6 +9,7 @@ import 'angular-socket-io';
 import ngFileUpload from 'ng-file-upload';
 import ngInfiniteScroll from 'ng-infinite-scroll';
 import ngTagsInput from 'ng-tags-input';
+import cgBusy from 'angular-busy';
 
 import uiRouter from 'angular-ui-router';
 import uiBootstrap from 'angular-ui-bootstrap';
@@ -35,7 +36,7 @@ import select from './select';
 import './app.css';
 
 angular.module('aucshareApp', [ngCookies, ngResource, ngSanitize, ngFileUpload,
-  ngInfiniteScroll, 'ngTagsInput', 'btford.socket-io', uiRouter,
+  ngInfiniteScroll, 'ngTagsInput', 'cgBusy', 'btford.socket-io', uiRouter,
   uiBootstrap, _Auth, account, admin, navbar, footer, main, constants, socket, util,
   mypage, select
 ])

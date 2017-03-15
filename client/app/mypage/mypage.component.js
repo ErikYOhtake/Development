@@ -13,6 +13,7 @@ export class MypageComponent {
     this.file = null;
     this.products = [];
     this.tags = [];
+    this.myPromise = null;
   }
 
   $onInit() {
@@ -24,6 +25,7 @@ export class MypageComponent {
 
   upload(file) {
     if(file) {
+      this.myPromise =
       this.Upload.upload({
         url: '/api/products',
         method: 'POST',
