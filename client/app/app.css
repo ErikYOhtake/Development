@@ -45,6 +45,9 @@
   padding: 0.2em 0;
 }
 
+.wrap {
+	overflow: hidden;
+}
 
 /* Component styles are injected through gulp */
 /* inject:css */
