@@ -110,10 +110,16 @@ export function create(req, res) {
         // register a Address
         // TODO
 
+        // create url for index
+        // TODO
+        var murl =
+          'http://res.cloudinary.com/dwbgracc3/image/upload/' +
+          'c_pad,h_360,w_360/' + result.url.slice(49);
+
         // create a product
         var product = new Product();
         product.rurl = result.url;
-        product.murl = result.url;
+        product.murl = murl;
         product.pbad = "dummy";
         product.prnm = req.product_name;
         product.expr = false;
