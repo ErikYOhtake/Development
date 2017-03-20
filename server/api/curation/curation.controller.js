@@ -80,6 +80,15 @@ export function show(req, res) {
 
 // Creates a new Curation in the DB
 export function create(req, res) {
+  // sleep
+  const d1 = new Date();
+  while (true) {
+    const d2 = new Date();
+    if(d2 - d1 > 3000) {
+      break;
+    }
+  }
+
   // create a curation
   var curation = new Curation();
   curation.usid = req.body.userId;

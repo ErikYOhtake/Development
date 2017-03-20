@@ -80,6 +80,15 @@ export function show(req, res) {
 
 // Creates a new Trade in the DB
 export function create(req, res) {
+  // sleep
+  const d1 = new Date();
+  while (true) {
+    const d2 = new Date();
+    if(d2 - d1 > 5000) {
+      break;
+    }
+  }
+
   // create a trade
   var trade = new Trade();
   trade.buid = req.body.userId;

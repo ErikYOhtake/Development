@@ -12,6 +12,7 @@ export default class SelectController {
     this.rawdataUrl = rawdataUrl;
     this.sp = sp;
     this.comment = null;
+    this.mdPromise = null;
   }
 
   $onInit() {
@@ -22,14 +23,15 @@ export default class SelectController {
   }
 
   buy() {
+    this.mdPromise =
     this.$http.post('/api/trades', {
       userId: this.userId,
       productId: this.productId
       })
       .then(response => {
         console.log('BUY done');
+        this.$uibModalInstance.close();
       });
-    this.$uibModalInstance.close();
   };
 
   cancel() {
@@ -37,13 +39,14 @@ export default class SelectController {
   };
 
   bad() {
-    this.$http.post('/api/curations', {
+    this.mdPromise =
+      this.$http.post('/api/curations', {
       userId: this.userId,
       productId: this.productId
       })
       .then(response => {
         console.log('BAD done');
+        this.$uibModalInstance.close();
       });
-    this.$uibModalInstance.close();
   };
 }

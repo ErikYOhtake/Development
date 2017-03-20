@@ -13,16 +13,17 @@
   </span>
 </div>
 
-<div class="modal-footer">
-  <button class="btn btn-primary" type="button" ng-click="selectCtrl.buy()">Buy</button>
-  <button class="btn btn-warning" type="button" ng-click="selectCtrl.cancel()">Cancel</button>
-</div>
-
-<div class="modal-footer">
-  <div class="input-group animated fadeIn">
-  <input type="text" class="form-control finderBar" ng-model="searchTerm" ng-model="selectCtrl.comment" placeholder="Comment...">
-  <span class="input-group-btn">
-    <button class="btn btn-default" type="button" ng-click="selectCtrl.bad()">Bad!</button>
-  </span>
+<div cg-busy="selectCtrl.mdPromise">
+  <div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="selectCtrl.buy()">Buy</button>
+    <button class="btn btn-warning" type="button" ng-click="selectCtrl.cancel()">Cancel</button>
+  </div>
+  <div class="modal-footer">
+    <div class="input-group animated fadeIn">
+      <input type="text" class="form-control finderBar" ng-model="searchTerm" ng-model="selectCtrl.comment" placeholder="Comment...">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button" ng-click="selectCtrl.bad()">Bad!</button>
+      </span>
+    </div>
   </div>
 </div>
