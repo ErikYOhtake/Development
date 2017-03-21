@@ -10,7 +10,7 @@
   <h1>latest</h1>
   <div class="row">
     <div class="col-xs-12 col-md-4" ng-repeat="product in $ctrl.products">
-      <img class="thumbnail" ng-src="{{product.murl}}" ng-click="$ctrl.show(product._id, product.rurl)">
+      <img class="thumbnail" ng-src="{{product.murl}}" ng-click="$ctrl.select(product._id, product.rurl, product.murl)">
 　  </div>
   </div>
   <div ng-show='$ctrl.busy'>Loading data...</div>

@@ -2,7 +2,7 @@
 
 export default class SelectController {
   /*@ngInject*/
-  constructor($http, $uibModalInstance, $scope, userId, productId, rawdataUrl, sp) {
+  constructor($http, $uibModalInstance, $scope, userId, productId, rawdataUrl, maskeddataUrl, sp) {
     this.$http = $http;
     this.$uibModalInstance = $uibModalInstance;
     this.$scope = $scope;
@@ -10,6 +10,7 @@ export default class SelectController {
     this.productId = productId;
     this.tags = null;
     this.rawdataUrl = rawdataUrl;
+    this.maskeddataUrl = maskeddataUrl;
     this.sp = sp;
     this.comment = null;
     this.mdPromise = null;

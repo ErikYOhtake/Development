@@ -47,7 +47,7 @@ export class MainController {
       });
   }
 
-  show(productId, rawdataUrl) {
+  select(productId, rawdataUrl, maskeddataUrl) {
     var productAddress = '0x40b23a65e265ec9a0c482ca195213323cfa8e0f6';
     //var sp = this.sharepoint.getPoint(productAddress)
     var sp = 10;
@@ -62,6 +62,7 @@ export class MainController {
         userId: function() { return userId },
         productId: function() { return productId },
         rawdataUrl: function() { return rawdataUrl },
+        maskeddataUrl: function() { return maskeddataUrl },
 //        sp: function() { return sp.c }
         sp: function() { return sp }
       }

@@ -33,6 +33,8 @@
 @import 'https://fonts.googleapis.com/css?family=Carrois+Gothic|Assistant';
 @import 'http://mbenford.github.io/ngTagsInput/css/ng-tags-input.min.css';
 @import '~angular-busy/angular-busy.css';
+@import '~angular-material/angular-material.css';
+@import 'https://fonts.googleapis.com/icon?family=Material+Icons';
 
 /**
  * App-wide Styles

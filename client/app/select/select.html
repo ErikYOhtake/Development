@@ -1,29 +1,22 @@
-<div class="modal-header">
-  <h3 class="modal-title">picture</h3>
-</div>
-
-<div class="modal-body">
-  Share Point:{{SelectCtrl.sp}}
-  <br/>
-  <div>
-    <img class="photo-img" ng-src="{{selectCtrl.rawdataUrl}}" style="max-width: 400px;">
-  </div>
-  <span ng-repeat="tag in selectCtrl.tags">
-    <span class="label label-info">{{tag}}</span>&nbsp;
-  </span>
-</div>
-
 <div cg-busy="selectCtrl.mdPromise">
-  <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="selectCtrl.buy()">Buy</button>
-    <button class="btn btn-warning" type="button" ng-click="selectCtrl.cancel()">Cancel</button>
-  </div>
-  <div class="modal-footer">
-    <div class="input-group animated fadeIn">
-      <input type="text" class="form-control finderBar" ng-model="searchTerm" ng-model="selectCtrl.comment" placeholder="Comment...">
-      <span class="input-group-btn">
-        <button class="btn btn-default" type="button" ng-click="selectCtrl.bad()">Bad!</button>
-      </span>
+  <div class="select-body">
+    <div>
+      <img class="photo-img" ng-src="{{selectCtrl.maskeddataUrl}}" style="max-width: 400px;">
     </div>
+    <span ng-repeat="tag in selectCtrl.tags">
+      <span class="label label-info">{{tag}}</span>&nbsp;
+    </span>
+  </div>
+  <div class="select-body">
+    <md-button class="md-primary" ng-click="selectCtrl.buy()">Buy</md-button>
+    <md-button class="md-accent" ng-click="selectCtrl.cancel()">Cancel</md-button>
+  </div>
+  <div class="select-body">
+    <md-input-container>
+      <input type="text" ng-model="selectCtrl.comment" placeholder="Comment...">
+    </md-input-container>
+    <md-button class="md-icon-button md-warn md-raised" ng-click="selectCtrl.bad()" aria-label="Mini FAB">
+      <i class="material-icons">thumb_down</i>
+    </md-button>
   </div>
 </div>
