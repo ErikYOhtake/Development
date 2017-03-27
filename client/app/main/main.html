@@ -2,15 +2,37 @@
   <div class="container">
     <h1>aucshare</h1>
     <p class="lead">aucshare is the principle of digital contents</p>
-    <!-- <img src="assets/images/yeoman.png" alt="I'm Yeoman"> -->
   </div>
 </header>
+
+<div class="container" style="text-align: center; padding: 10px; max-width: 400px;">
+  <md-autocomplete
+    md-dropdown-items="10"
+    md-clear-button="true"
+    ng-disabled="$ctrl.isDisabled"
+    md-no-cache="$ctrl.noCache"
+    md-selected-item="$ctrl.selectedItem"
+    md-search-text-change="$ctrl.searchTextChange($ctrl.searchText)"
+    md-search-text="$ctrl.searchText"
+    md-selected-item-change="$ctrl.selectedItemChange(item)"
+    md-items="item in $ctrl.querySearch($ctrl.searchText)"
+    md-item-text="item.display"
+    md-min-length="0"
+    placeholder="Search the aucshare...">
+    <md-item-template>
+      <span md-highlight-text="$ctrl.searchText" md-highlight-flags="^i">{{item.display}}</span>
+    </md-item-template>
+    <md-not-found>
+      No states matching "{{$ctrl.searchText}}" were found.
+    </md-not-found>
+  </md-autocomplete>
+</div>
 
 <div class="container" infinite-scroll='$ctrl.showMore()' infinite-scroll-disabled='$ctrl.busy || $ctrl.noMoreData'>
   <h1>latest</h1>
   <div class="row">
     <div class="col-xs-12 col-md-4" ng-repeat="product in $ctrl.products">
-      <img class="thumbnail" ng-src="{{product.murl}}" ng-click="$ctrl.select(product._id, product.rurl, product.murl)">
+      <img class="thumbnail" ng-src="{{product.murl}}" ng-click="$ctrl.select(product._id, product.rurl, product.murl)" style="max-width: 100%;">
 　  </div>
   </div>
   <div ng-show='$ctrl.busy'>Loading data...</div>

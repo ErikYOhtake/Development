@@ -17,9 +17,32 @@ export class MainController {
       this.userId = data._id;
     });
     this.products = [];
+
+    this.isDisabled    = false;
+    this.noCache    = true;
+    this.selectedItem    = null;
+    this.searchText = null;
+    this.simulateQuery = false;
+
+    this.states        = null;
   }
 
   $onInit() {
+    var allStates = 'Alabama, Alaska, Arizona, Arkansas, California, Colorado, Connecticut, Delaware,\
+               Florida, Georgia, Hawaii, Idaho, Illinois, Indiana, Iowa, Kansas, Kentucky, Louisiana,\
+               Maine, Maryland, Massachusetts, Michigan, Minnesota, Mississippi, Missouri, Montana,\
+               Nebraska, Nevada, New Hampshire, New Jersey, New Mexico, New York, North Carolina,\
+               North Dakota, Ohio, Oklahoma, Oregon, Pennsylvania, Rhode Island, South Carolina,\
+               South Dakota, Tennessee, Texas, Utah, Vermont, Virginia, Washington, West Virginia,\
+               Wisconsin, Wyoming';
+
+    this.states = allStates.split(/, +/g).map( function (state) {
+      return {
+        value: state.toLowerCase(),
+          display: state
+        };
+      });
+
     this.$http.get('/api/products')
       .then(response => {
         this.products = response.data;
@@ -28,6 +51,23 @@ export class MainController {
         }
         this.busy = false;
       });
+  }
+
+  search(value) {
+    console.log("value:" + value);
+  }
+
+  querySearch (query) {
+    console.log("query:" + query);
+    return this.states;
+  }
+
+  searchTextChange(text) {
+    console.log('Text changed to ' + text);
+  }
+
+  selectedItemChange(item) {
+    console.log('Item changed to ' + JSON.stringify(item));
   }
 
   showMore() {

@@ -1,7 +1,7 @@
 <div cg-busy="selectCtrl.mdPromise">
   <div class="select-body">
     <div>
-      <img class="photo-img" ng-src="{{selectCtrl.maskeddataUrl}}" style="max-width: 400px;">
+      <img class="photo-img" ng-src="{{selectCtrl.maskeddataUrl}}" style="max-width: 100%;">
     </div>
     <span ng-repeat="tag in selectCtrl.tags">
       <span class="label label-info">{{tag}}</span>&nbsp;
@@ -13,7 +13,7 @@
   </div>
   <div class="select-body">
     <md-input-container>
-      <input type="text" ng-model="selectCtrl.comment" placeholder="Comment...">
+      <input type="text" ng-model="selectCtrl.comment" placeholder="Dislike...">
     </md-input-container>
     <md-button class="md-icon-button md-warn md-raised" ng-click="selectCtrl.bad()" aria-label="Mini FAB">
       <i class="material-icons">thumb_down</i>

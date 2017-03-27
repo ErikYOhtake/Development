@@ -7,13 +7,14 @@ import routes from './mypage.routes';
 
 export class MypageComponent {
   /*@ngInject*/
-  constructor($http, Upload) {
+  constructor($http, Upload, Auth) {
     this.$http = $http;
     this.Upload = Upload;
     this.file = null;
     this.products = [];
     this.tags = [];
     this.ulPromise = null;
+    this.getCurrentUser = Auth.getCurrentUserSync;
   }
 
   $onInit() {
