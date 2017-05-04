@@ -4,8 +4,9 @@ import routing from './main.routes';
 
 export class MainController {
   /*@ngInject*/
-  constructor($http, $scope, socket, $uibModal, appConfig, Auth) {
+  constructor($http, $scope, $q, socket, $uibModal, appConfig, Auth) {
     this.$http = $http;
+    this.$q = $q;
     this.socket = socket;
     this.$uibModal = $uibModal;
     this.numberOfDisplay = appConfig.numberOfDisplay;
@@ -24,26 +25,15 @@ export class MainController {
     this.searchText = null;
     this.simulateQuery = false;
 
-    this.states        = null;
+    this.users = null;
+    this.tags = null;
+    this.empty = [];
+
+    this.getParam = '/api/products/index/';
   }
 
   $onInit() {
-    var allStates = 'Alabama, Alaska, Arizona, Arkansas, California, Colorado, Connecticut, Delaware,\
-               Florida, Georgia, Hawaii, Idaho, Illinois, Indiana, Iowa, Kansas, Kentucky, Louisiana,\
-               Maine, Maryland, Massachusetts, Michigan, Minnesota, Mississippi, Missouri, Montana,\
-               Nebraska, Nevada, New Hampshire, New Jersey, New Mexico, New York, North Carolina,\
-               North Dakota, Ohio, Oklahoma, Oregon, Pennsylvania, Rhode Island, South Carolina,\
-               South Dakota, Tennessee, Texas, Utah, Vermont, Virginia, Washington, West Virginia,\
-               Wisconsin, Wyoming';
-
-    this.states = allStates.split(/, +/g).map( function (state) {
-      return {
-        value: state.toLowerCase(),
-          display: state
-        };
-      });
-
-    this.$http.get('/api/products')
+    this.$http.get(this.getParam)
       .then(response => {
         this.products = response.data;
         if (this.products.length < this.numberOfDisplay) {
@@ -54,20 +44,97 @@ export class MainController {
   }
 
   search(value) {
-    console.log("value:" + value);
   }
 
   querySearch (query) {
-    console.log("query:" + query);
-    return this.states;
+    if (!query) {
+      return this.empty;
+    }
+    this.users = null;
+    this.tags = null;
+    var promiseUser = this.findUsersByQuery(query);
+    var promiseTags = this.findTagsByQuery(query);
+    return this.$q.all([promiseUser, promiseTags])
+      .then(() => {
+        if (this.users && this.tags ) {
+          return this.users.concat(this.tags);
+        } else if (this.users) {
+          return this.users;
+        } else if (this.tags) {
+          return this.tags;
+        } else {
+          return this.empty;
+        }
+      });
+  }
+
+  findUsersByQuery(query) {
+    return this.$http.get('/api/users/find/' + query)
+      .then(response => {
+        var list;
+        if (response.data.length > 0) {
+          list = [response.data.length];
+          for (var i = 0; i < response.data.length; i++) {
+            list[i] = {
+              state: response.data[i].name,
+              id: response.data[i]._id
+            };
+          }
+          this.users = list.map( function (state) {
+            return {
+                type: 'user',
+                value: state.state,
+                display: state.state,
+                id: state.id
+              };
+            });
+        };
+      });
+  }
+
+  findTagsByQuery(query) {
+    return this.$http.get('/api/products/find/' + query)
+      .then(response => {
+        var list;
+        if (response.data.length > 0) {
+          list = [response.data.length];
+          for (var i = 0; i < response.data.length; i++) {
+            list[i] = response.data[i].tags[0];
+          }
+          this.tags = list.map( function (state) {
+            return {
+                type: 'tag',
+                value: state,
+                display: state,
+              };
+            });
+        };
+      });
   }
 
   searchTextChange(text) {
-    console.log('Text changed to ' + text);
   }
 
   selectedItemChange(item) {
-    console.log('Item changed to ' + JSON.stringify(item));
+    var type = item.type;
+    if (type === 'user') {
+      var id = item.id;
+      this.getParam = '/api/products/seller/' + id;
+    } else if (type === 'tag') {
+      var value = item.value;
+      this.getParam = '/api/products/tag/' + value;
+    } else {
+      // do nothing
+    }
+    return this.$http.get(this.getParam)
+      .then(response => {
+        this.noMoreData = false;
+        this.products = response.data;
+        if (this.products.length < this.numberOfDisplay) {
+          this.noMoreData = true;
+        }
+        this.busy = false;
+      });
   }
 
   showMore() {
@@ -77,7 +144,8 @@ export class MainController {
     this.busy = true;
     var lastId = this.products[this.products.length-1]._id;
 
-    this.$http.get('/api/products/index/' + lastId)
+    var last = this.getParam.substr(this.getParam.length-1);
+    this.$http.get(this.getParam + (last === '/' ? 'more/' : '/more/') + lastId)
       .then(response => {
         Array.prototype.push.apply(this.products, response.data);
         if (response.data.length === 0) {

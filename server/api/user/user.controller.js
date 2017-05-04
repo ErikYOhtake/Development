@@ -30,6 +30,15 @@ export function index(req, res) {
     .catch(handleError(res));
 }
 
+export function findUsers(req, res) {
+  var query = req.params.text;
+  return User.find({name: new RegExp(query, 'i')}, {_id: 1, name: 1}).limit(5).exec()
+    .then(users => {
+      res.status(200).json(users);
+    })
+    .catch(handleError(res));
+}
+
 /**
  * Creates a new user
  */

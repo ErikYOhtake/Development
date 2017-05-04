@@ -17,7 +17,7 @@
     md-selected-item-change="$ctrl.selectedItemChange(item)"
     md-items="item in $ctrl.querySearch($ctrl.searchText)"
     md-item-text="item.display"
-    md-min-length="0"
+    md-min-length="1"
     placeholder="Search the aucshare...">
     <md-item-template>
       <span md-highlight-text="$ctrl.searchText" md-highlight-flags="^i">{{item.display}}</span>

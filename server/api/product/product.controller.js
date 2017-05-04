@@ -73,7 +73,14 @@ export function index(req, res) {
 }
 
 export function showMore(req, res) {
-  return Product.find({_id: {$lt: req.params.id}}).sort({crtm: -1}).limit(config.numberOfDisplay).exec()
+  return Product.find({_id: {$lt: req.params.pid}}).sort({crtm: -1}).limit(config.numberOfDisplay).exec()
+    .then(respondWithResult(res))
+    .catch(handleError(res));
+}
+
+export function findTags(req, res) {
+  var query = req.params.query;
+  return Product.find({tags: new RegExp(query, 'i')}, {_id: 0, 'tags.$': 1}).limit(5).exec()
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
@@ -86,7 +93,24 @@ export function findByOwner(req, res) {
 }
 
 export function findBySeller(req, res) {
-  return Product.find({seid: req.params.id}).exec()
+  var query = {};
+  query['seid'] = req.params.id;
+  if (req.params.pid) {
+    query['_id'] = {"$lt": req.params.pid};
+  }
+  return Product.find(query).sort({crtm: -1}).limit(config.numberOfDisplay).exec()
+    .then(handleEntityNotFound(res))
+    .then(respondWithResult(res))
+    .catch(handleError(res));
+}
+
+export function findByTag(req, res) {
+  var query = {};
+  query['tags'] = req.params.tag;
+  if (req.params.pid) {
+    query['_id'] = {"$lt": req.params.pid};
+  }
+  return Product.find(query).sort({crtm: -1}).limit(config.numberOfDisplay).exec()
     .then(handleEntityNotFound(res))
     .then(respondWithResult(res))
     .catch(handleError(res));
