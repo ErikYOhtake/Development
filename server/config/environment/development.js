@@ -7,7 +7,7 @@ module.exports = {
 
   // MongoDB connection options
   mongo: {
-    uri: 'mongodb://hierophant.japaneast.cloudapp.azure.com/aucshare-dev'
+    uri: 'mongodb://localhost/aucshare-dev'
   },
 
   // Seed database on startup
